@@ -198,12 +198,14 @@ def login():
 
     with col2:
         st.subheader("Login")
+
         username = st.text_input("Usuário")
         password = st.text_input("Senha", type="password")
         if st.button("Login"):
             if username == "admin" and password == "admin":
                 st.session_state["authenticated"] = True
-                st.success("Login bem-sucedido!")
+                #st.success("Login bem-sucedido!")
+                st.rerun()
             else:
                 st.error("Usuário ou senha incorretos")
 
@@ -218,7 +220,12 @@ def main():
 
     uploaded_file = st.file_uploader("Escolha um arquivo CSV ou XLSX", type=["csv", "xlsx"])
 
-    if uploaded_file is not None:
+    # ADICIONADO
+    if "uploaded_data" not in st.session_state:
+            st.session_state["uploaded_data"] = None
+
+    # RETIREI O "IS NOT NONE" DEPOIS DESSE PRIMEIRO IF
+    if uploaded_file:
         fake_load("Carregando arquivo...", seconds=3)
         st.session_state.uploaded_data = read_file(uploaded_file)
 

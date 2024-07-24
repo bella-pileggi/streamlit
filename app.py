@@ -193,7 +193,6 @@ def perc_data():
 
 
 def login():
-    # Centralizando o formulário de login
     col1, col2, col3 = st.columns([3, 3, 3])
 
     with col2:
@@ -204,7 +203,6 @@ def login():
         if st.button("Login"):
             if username == "admin" and password == "admin":
                 st.session_state["authenticated"] = True
-                #st.success("Login bem-sucedido!")
                 st.rerun()
             else:
                 st.error("Usuário ou senha incorretos")
@@ -220,11 +218,9 @@ def main():
 
     uploaded_file = st.file_uploader("Escolha um arquivo CSV ou XLSX", type=["csv", "xlsx"])
 
-    # ADICIONADO
     if "uploaded_data" not in st.session_state:
             st.session_state["uploaded_data"] = None
 
-    # RETIREI O "IS NOT NONE" DEPOIS DESSE PRIMEIRO IF
     if uploaded_file:
         fake_load("Carregando arquivo...", seconds=3)
         st.session_state.uploaded_data = read_file(uploaded_file)
@@ -244,7 +240,6 @@ def main():
                 st.write("Caso deseje baixar os dados descartados:")
                 download_file("medsenior_discarded.xlsx", "Baixar dados descartados")
 
-                # Resultado final da inferência
                 fake_load("Fazendo a inferência dos dados...", seconds=5)
                 st.header("Dados rankeados:")
                 final_data = pd.read_excel("final_medsenior_rankeado_cliente_final.xlsx")
